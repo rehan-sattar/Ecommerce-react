@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
-class loggedInHeader extends React.Component {
+class HeaderLoggedIn extends React.Component {
   render() {
     return(
       <div>
-        <h1>Logged In Header</h1>
+        <button className="btn btn-danger">Logout</button>
       </div>
     );
   };
 };
 
-export default loggedInHeader;
+export default HeaderLoggedIn;

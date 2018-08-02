@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import {bindActionCreators} from "redux";
+import { getUserloginAction } from "../../store/Actions/userActions";
 class LoginForm extends React.Component {
   constructor() {
     super();
@@ -13,7 +16,12 @@ class LoginForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
+    this.props.userLogin(this.state);
+    this.setState({
+      email : '',
+      password: '',
+      error : ''
+    })
   };
 
   render() {
@@ -47,4 +55,12 @@ class LoginForm extends React.Component {
   };
 };
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) =>  {
+  return bindActionCreators({
+      userLogin: (state) => getUserloginAction(state)
+    },
+    dispatch
+  );
+}
+
+export default connect(undefined, mapDispatchToProps)(LoginForm);

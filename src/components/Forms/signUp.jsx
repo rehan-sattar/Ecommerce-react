@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { createUser } from "../../store/Actions/userActions";
 class signUp extends React.Component {
   constructor() {
     super();
@@ -14,7 +16,13 @@ class signUp extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
+    this.props.getUserSignUP(this.state);
+    this.setState({
+      email : '',
+      password: '',
+      userName: '',
+      error : ''
+    })
   };
 
   render() {
@@ -50,4 +58,9 @@ class signUp extends React.Component {
   };
 };
 
-export default signUp;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUserSignUP : (state) => createUser(state)
+  }
+}
+export default connect(undefined, mapDispatchToProps)(signUp);
