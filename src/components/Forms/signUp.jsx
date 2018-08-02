@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { bindActionCreators} from "redux";
 import { createUser } from "../../store/Actions/userActions";
 class signUp extends React.Component {
   constructor() {
@@ -14,9 +15,14 @@ class signUp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   };
 
+  componentWillReceiveProps(props) {
+    if (props.userReducer.user ) {
+      this.props.history.push("/dashboard");
+    }
+  }
   handleSubmit(e) {
     e.preventDefault();
-    this.props.getUserSignUP(this.state);
+    this.props.getUserSignUp(this.state);
     this.setState({
       email : '',
       password: '',
@@ -58,9 +64,17 @@ class signUp extends React.Component {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+
+const mapStateToProps = (state) => {
   return {
-    getUserSignUP : (state) => createUser(state)
-  }
+    user : state.user
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    getUserSignUp: (state) => createUser(state)
+  },
+  dispatch
+);
 }
-export default connect(undefined, mapDispatchToProps)(signUp);
+export default connect(mapStateToProps, mapDispatchToProps)(signUp);

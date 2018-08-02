@@ -14,6 +14,13 @@ class LoginForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   };
 
+  componentWillReceiveProps(props) {
+    console.log("From Com will Recieve Props" + props);
+    if (props.userReducer.user ) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     this.props.userLogin(this.state);
@@ -55,6 +62,14 @@ class LoginForm extends React.Component {
   };
 };
 
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    user : state.user
+  };
+};
+
+
 const mapDispatchToProps = (dispatch) =>  {
   return bindActionCreators({
       userLogin: (state) => getUserloginAction(state)
@@ -63,4 +78,4 @@ const mapDispatchToProps = (dispatch) =>  {
   );
 }
 
-export default connect(undefined, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

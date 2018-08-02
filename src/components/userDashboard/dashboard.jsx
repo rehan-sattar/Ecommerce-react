@@ -1,8 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
+import {bindActionCreators  } from "redux";
+import {getUserLogout} from "../../store/Actions/userActions";
 import  HeaderLoggedIn from "../Headers/loggedInHeader";
 import ProductCard from "../PublicProducts/ProductCard";
 class userDashboard extends React.Component {
-
+ 
   render() {
     const listOfProducts = [
       {
@@ -56,15 +59,5 @@ class userDashboard extends React.Component {
   }
 }
 
+
 export default userDashboard;
-{/*
-
-  <div class="card text-center card-primary text-white mb-3">
-      <div class="card-block">
-        <h3>Posts</h3>
-        <h1 class="display-4"><i class="fa fa-pencil"></i> 6</h1>
-        <a href="posts.html" class="btn btn-sm btn-outline-secondary text-white">View</a>
-    </div>
-  </div>
-
-*/}

@@ -13,3 +13,12 @@ ReactDOM.render(
 </Provider>
     , document.getElementById('root'));
 registerServiceWorker();
+
+
+_firebase.auth().onAuthStateChanged( user => {
+    if( user ) {
+        console.log('user logged in');
+    } else {
+        console.log('user Logged out');
+    }
+})
