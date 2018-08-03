@@ -2,8 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import {bindActionCreators  } from "redux";
 import {getUserLogout} from "../../store/Actions/userActions";
+import AddProductForm from "../userDashboard/addProduct";
+import SearchProduct from "../userDashboard/searchProduct";
 import  HeaderLoggedIn from "../Headers/loggedInHeader";
 import ProductCard from "../PublicProducts/ProductCard";
+
 class userDashboard extends React.Component {
  
   render() {
@@ -49,6 +52,13 @@ class userDashboard extends React.Component {
             </div>
           </div>
           </div>
+
+      {/*  Product Add Component */}
+
+      <AddProductForm />
+        {/* Search product */}
+        <br/> 
+      <SearchProduct />
         <div className="container">
           <div className="row">
             {listOfProducts.map( product => <ProductCard productItem={product} />)}
