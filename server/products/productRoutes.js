@@ -3,7 +3,10 @@ const productController = require('./productControllers');
 
 const router = express.Router();
 // all these routes will be customized!
-router.get('/addProduct' , productController.addProductAttempt);
+router.post('/deleteProduct/:id', productController.deleteProduct)
+router.get('/allProducts', productController.getAllProductAttempt)
+router.get('/:productId', productController.getProductAttempt)
+router.post('/addProduct' , productController.addProductAttempt);
 router.get('/searchProfuct', productController.searchProductAttempt);
 router.get('/searchProductViaCatagory', productController.searchViaCatagoryAttempt);
 
