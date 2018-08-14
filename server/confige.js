@@ -1,3 +1,3 @@
 module.exports = {
-    DATABASE_URL : 'mongodb://rs-admin:rs-admin123@ds119442.mlab.com:19442/olx-pwa-react'
+    DATABASE_URL : `mongodb+srv://Rehan:rehansattar@olx-pakistan-e6mon.mongodb.net/test?retryWrites=true`
 };
