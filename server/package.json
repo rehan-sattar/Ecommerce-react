@@ -1,0 +1,21 @@
+{
+  "name": "olx-pakistan-pwa",
+  "version": "1.0.0",
+  "description": "Olx app in React and Server in Node.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "R-S",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "crypto-js": "^3.1.6",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.10",
+    "mongoose": "^5.2.7",
+    "validator": "^10.5.0"
+  }
+}
