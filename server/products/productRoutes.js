@@ -1,13 +1,23 @@
-const express  = require('express');
+const express = require('express');
+const multer = require('multer');
 const productController = require('./productControllers');
 
 const router = express.Router();
+const storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, './uplod');
+    }, filename: function (req, file, callback) {
+        callback(null, new Date().toISOString() + file.originalname)
+    }
+})
+const upload = multer({storage: storage});
+
 // all these routes will be customized!
+router.post('/addProduct', upload.single('productImage'), productController.addProductAttempt);
 router.post('/deleteProduct/:id', productController.deleteProduct)
 router.get('/allProducts', productController.getAllProductAttempt)
 router.get('/:productId', productController.getProductAttempt)
-router.post('/addProduct' , productController.addProductAttempt);
-router.get('/searchProfuct', productController.searchProductAttempt);
+router.get('/searchProduct/:name', productController.searchProductAttempt);
 router.get('/searchProductViaCatagory', productController.searchViaCatagoryAttempt);
 
 module.exports = router;
