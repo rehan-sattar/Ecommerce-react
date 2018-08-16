@@ -16,7 +16,7 @@ express.use('/dashboard/products' ,  productRoutes);
 // express.use('/allproducts', allProducts);
 
 express.listen(port, () => {
-    console.log('Server is running!');
+    console.log('Server is running on PORT:'+ port);
 }); 
 
 /*
