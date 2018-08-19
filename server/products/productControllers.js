@@ -31,6 +31,7 @@ const getAllProductAttempt = (request, response) => {
                 const desiredResponse = {
                     totalProducts: docs.length,
                     products: docs.map(doc => ({
+                        _id : doc._id,
                         name: doc.name,
                         title: doc.title,
                         catagory: doc.catagory,
@@ -61,6 +62,7 @@ const getProductAttempt = (request, response) => {
             console.log(`Response from :/Product: ${doc}`);
             if (doc) {
                 const doc = {
+                    _id : doc._id,
                     name: doc.name,
                     title: doc.title,
                     catagory: doc.catagory,
@@ -100,6 +102,7 @@ const searchProductAttempt = (req, res) => {
                 productArray = [];
                 doc.map(document => {
                     let product = {
+                        _id : document._id,
                         name: document.name,
                         title: document.title,
                         catagory: document.catagory,
@@ -140,6 +143,7 @@ const searchViaCatagoryAttempt = (req, res) => {
                 productArray = [];
                 doc.map(document => {
                     let product = {
+                        _id : document._id,
                         name: document.name,
                         title: document.title,
                         catagory: document.catagory,

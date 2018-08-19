@@ -1,19 +1,22 @@
 const express = require('express');
-const multer = require('multer');
+// const multer = require('multer');
 const productController = require('./productControllers');
-
+const authCheckAccessMiddleware = require('../middleware/auth-access-middleware');
 const router = express.Router();
-const storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, './uplod');
-    }, filename: function (req, file, callback) {
-        callback(null, new Date().toISOString() + file.originalname)
-    }
-})
-const upload = multer({storage: storage});
+
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, './uploads/');
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, new Date().toISOString() + file.originalname);
+//     }
+// });
+// const upload = multer({ storage: storage });
 
 // all these routes will be customized!
-router.post('/addProduct', upload.single('productImage'), productController.addProductAttempt);
+//  upload.single('productImage') to be ued in addPRoduct ** pending Status
+router.post('/addProduct', authCheckAccessMiddleware , productController.addProductAttempt);
 router.post('/deleteProduct/:id', productController.deleteProduct)
 router.get('/allProducts', productController.getAllProductAttempt)
 router.get('/:productId', productController.getProductAttempt)
