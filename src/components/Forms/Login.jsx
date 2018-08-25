@@ -16,12 +16,9 @@ class LoginForm extends React.Component {
   };
 
 
-  componentWillReceiveProps(props) {
-    console.log(`Props fuctio Fired with Props: ${props}`);  
-  }
-
   handleSubmit(e) {
     e.preventDefault();
+    console.log(this.state);
     this.props.userLogin(this.state);
     this.setState({
       email : '',
@@ -48,7 +45,7 @@ class LoginForm extends React.Component {
                             onChange={(e) => this.setState({password: e.target.value}) }/> <br />
                   </div>
                   <div className="card-footer">
-                    <button className="btn btn-dark btn-block">Login <i className="fas fa-arrow-right float-right"></i></button>
+                    <button className="btn btn-dark btn-block" type="submit">Login <i className="fas fa-arrow-right float-right"></i></button>
                   </div>
                 </form>
               </div>
@@ -61,13 +58,13 @@ class LoginForm extends React.Component {
   };
 };
 
-const mapStateToProps = (state) => {
-  console.log('Props state',state);
-  return {
-    user : state.user,
-    proprCheck : true
-  };
-};
+// const mapStateToProps = (state) => {
+//   console.log('Props state',state);
+//   return {
+//     user : state.user,
+//     proprCheck : true
+//   };
+// };
 
 
 const mapDispatchToProps = (dispatch) =>  {
@@ -78,4 +75,4 @@ const mapDispatchToProps = (dispatch) =>  {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(undefined, mapDispatchToProps)(LoginForm);

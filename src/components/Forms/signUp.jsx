@@ -37,12 +37,12 @@ class signUp extends React.Component {
       <div className="container mt-4">
         <div className="row justify-content-center">
           <div className="col-md-5 col-lg-5 col-sm-12">
-            <div className="card">
+            <div className="card shadow">
               <div className="card-header text-center">
-                  <h5>Sign Up</h5>
+                  <h2> <i className="fas fa-user-plus"></i> Sign Up</h2>
               </div>
               <form onSubmit={this.handleSubmit}>
-                <div className="card-block">
+                <div className="card-body">
                     <input className="form-control" type="text" required placeholder="User Name"
                         onChange= {(e) => this.setState({userName: e.target.value }) }  /> <br />
                     <input className="form-control" type="email" required placeholder="Email"
@@ -51,7 +51,7 @@ class signUp extends React.Component {
                         onChange={(e) => this.setState({password: e.target.value}) }/> <br />
                 </div>
                 <div className="card-footer">
-                  <button className="btn">create Account</button>
+                  <button className="btn btn-block btn-dark"> Create Account <i className="fas fa-arrow-right float-right"></i></button>
                 </div>
               </form>
             </div>
