@@ -1,50 +1,49 @@
-import { _firebase } from  "../../firebase/firebase";
-import { createBrowserHistory } from "history";
-const history = createBrowserHistory();
-
-export const  getUserloginAction  = ({email, password}) => {
-  console.log('inside getUserLoginAction');
-  return  dispatch => {
-    _firebase.auth().signInWithEmailAndPassword(email, password)
-     .then((response) => {
-       console.log("User Response: ", response.user);
-       dispatch({
-         type: "GET_USER_LOGIN",
-         payload: response.user.uid
-       });
-     }).catch(error => {
-       console.log('Error', error);
-     });
+const APIEndPoint = 'http://localhost:8080'
+export function getUserloginAction({ email, password }) {
+  return dispatch => {
+    fetch(`${APIEndPoint}/user/signIn`, {
+      method: 'post',
+      body: JSON.stringify({ bodyData: { email, password } }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        dispatch({
+          type: 'GET_USER_LOGIN',
+          payload: data
+        })
+      })
+      .catch(err => console.log(`Error While login : ${err} `))
   };
 };
 
 
-export function createUser({email, password}) {
-  console.log(email, password);
+export function createUser({ userName, email, password }) {
   return dispatch => {
     console.log('inside create Dispatch user');
-    _firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then( response => {
-          dispatch({
-            type : 'GET_USER_SIGN_UP',
-            payload : response.user.uid
-          })
-      }).catch( err => {
-        console.log('Error',err);
+    fetch(`${APIEndPoint}/user/signUp`, {
+      method: 'post',
+      body: JSON.stringify({ bodyData: { userName, email, password } }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(`USER DATA: ${data}`)
+        dispatch({
+          type: 'GET_USER_SIGN_UP',
+          payload : data
+        })
       })
+      .catch(e => console.log(e));
   }
 }
 
-export const getUserLogout = () => {
+export function getUserLogout() {
   return dispatch => {
-    _firebase.auth().signOut()
-      .then( res => {
-        dispatch({
-          type : 'GET_USER_LOGOUT'
-        });
-        history.push("/");
-      }).catch( err => {
-        console.log('Error: ', err)
-      })
+    console.log('Work to be done Logout!')
   };
 };
