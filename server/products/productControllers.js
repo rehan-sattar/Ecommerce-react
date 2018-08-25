@@ -1,16 +1,10 @@
 const mongoose = require('mongoose');
 const Product = require('./modal');
+
 /////////////// addProductAttempt ////////////////////////
 const addProductAttempt = (request, response) => {
-    const product = new Product({
-        title: request.body.title,
-        name: request.body.name,
-        cataqgory: request.body.catagory,
-        description: request.body.description,
-        model: request.body.model,
-        year: request.body.year,
-        price: request.body.price
-    });
+    const product = new Product(request.body.bodyData);
+    // console.log(product)
     product
         .save()
         .then(res => {
@@ -20,7 +14,7 @@ const addProductAttempt = (request, response) => {
                 message: 'Product has been added!'
             })
         })
-        .catch(err => console.log(err));
+        .catch(err => res.send({ status: false, err }));
 };
 
 ///////////getAllProductAttempt//////////////////
@@ -31,12 +25,14 @@ const getAllProductAttempt = (request, response) => {
                 const desiredResponse = {
                     totalProducts: docs.length,
                     products: docs.map(doc => ({
-                        _id : doc._id,
+                        _id: doc._id,
                         name: doc.name,
                         title: doc.title,
                         catagory: doc.catagory,
                         description: doc.description,
                         price: doc.price,
+                        sellerLocation: doc.sellerLocation,
+                        sellerPhone: doc.sellerPhone,
                         request: {
                             type: 'GET',
                             url: `localhost:8080/dashboard/products/${doc._id}`
@@ -62,12 +58,14 @@ const getProductAttempt = (request, response) => {
             console.log(`Response from :/Product: ${doc}`);
             if (doc) {
                 const doc = {
-                    _id : doc._id,
+                    _id: doc._id,
                     name: doc.name,
                     title: doc.title,
                     catagory: doc.catagory,
                     description: doc.description,
                     price: doc.price,
+                    sellerLocation: doc.sellerLocation,
+                    sellerPhone: doc.sellerPhone,
                     request: {
                         type: 'GET',
                         url: `localhost:8080/dashboard/products/${doc._id}`
@@ -102,12 +100,14 @@ const searchProductAttempt = (req, res) => {
                 productArray = [];
                 doc.map(document => {
                     let product = {
-                        _id : document._id,
+                        _id: document._id,
                         name: document.name,
                         title: document.title,
                         catagory: document.catagory,
                         description: document.description,
                         price: document.price,
+                        sellerPhone: document.sellerPhone,
+                        sellerLocation: document.sellerLocation,
                         request: {
                             type: 'GET',
                             url: `localhost:8080/dashboard/products/searchProduct/` + nameOfProduct
@@ -133,7 +133,7 @@ const searchProductAttempt = (req, res) => {
 };
 
 const searchViaCatagoryAttempt = (req, res) => {
-    const catagoryName = req.params.name
+    const catagoryName = req.body.catagoryName
     Product.find({
         'name': `${catagoryName}`
     })
@@ -143,12 +143,14 @@ const searchViaCatagoryAttempt = (req, res) => {
                 productArray = [];
                 doc.map(document => {
                     let product = {
-                        _id : document._id,
+                        _id: document._id,
                         name: document.name,
                         title: document.title,
                         catagory: document.catagory,
                         description: document.description,
                         price: document.price,
+                        sellerPhone: document.sellerPhone,
+                        sellerLocation: document.sellerLocation,
                         request: {
                             type: 'GET',
                             url: `localhost:8080/dashboard/products/searchProduct/` + catagoryName
