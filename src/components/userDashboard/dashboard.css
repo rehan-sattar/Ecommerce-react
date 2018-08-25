@@ -1,0 +1,12 @@
+/* .dashboard-container{
+    height: auto;
+    width: 100%;
+    background-color: #333331;
+} */
+.card_option {
+    text-decoration: none
+}
+
+.card_option:hover {
+    text-decoration: none;
+}

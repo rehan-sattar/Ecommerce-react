@@ -3,7 +3,7 @@ import ProductList from "./productList";
 class SearchProduct extends React.Component {
     render() {
         return (
-            <div>
+            <div>   
                 <div className="container">
                     <div className="row justify-content-center">
                         <h1>Search Product</h1>

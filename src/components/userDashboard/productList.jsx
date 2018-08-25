@@ -1,10 +1,27 @@
 import React from "react";
 
 class ProductList extends React.Component {
+    constructor(props) {
+        super(props);
+        console.log(props);
+        this.state = {
+            catagoryValue: ''
+        }
+    }
     render() {
         return (
             <div>
-                <select name="" className="form-control" id="">
+                <select
+                    value={this.state.catagoryValue}
+                    onChange={
+                        (e) => {
+                            this.setState({
+                                catagoryValue : e.target.value
+                            })
+                            this.props.catagoryFunc(this.state.catagoryValue)
+                        }
+                    }
+                    className="form-control" required>
                     <option value="propertyForSale">Property for Sale</option>
                     <option value="propertyForRent">Property For Rent</option>
                     <option value="bikes">Bikes</option>

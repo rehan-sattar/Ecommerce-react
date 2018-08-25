@@ -7,10 +7,10 @@ import PublicProducts from "../PublicProducts/publicProducts";
 class Home extends React.Component {
   render() {
     return (
-        <div>
-             <LoginForm />
-             <PublicProducts />
-        </div>
+      <div>
+        {/* <loggedInHeader /> */}
+        <LoginForm />
+      </div>
     );
   };
 };

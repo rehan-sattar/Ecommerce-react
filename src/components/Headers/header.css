@@ -1,0 +1,16 @@
+.navbar {
+    background-color: #7263FF;
+}
+.header_links {
+    padding : 0.5em;
+    margin-left: 0.5em;
+    color : white;
+    text-decoration: none;
+}
+.header_links:hover{
+    background-color : white;
+    color: #7263FF;
+    text-decoration: none;
+}
+
+
