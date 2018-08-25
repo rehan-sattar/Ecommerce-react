@@ -16,12 +16,13 @@ const signInAttempt = (req, res) => {
             bcrypt.compare(req.body.bodyData.password, user.password, (request, result) => {
                 if (result) {
                     const token = jwt.sign({
-                        email : user.email,
-                        id : user._id
-                    }, 'olx-pakistan' , {
-                        expiresIn : '1h'
-                    });
-                    return res.status(200).send({
+                        email: user.email,
+                        id: user._id
+                    }, 'olx-pakistan', {
+                            expiresIn: '1h'
+                        });
+                    console.log(token);
+                    res.status(200).send({
                         message: 'Auth Success!',
                         token
                     });
@@ -31,16 +32,11 @@ const signInAttempt = (req, res) => {
         .catch(err => res.send({ status: false, data: err }));
 };
 
-// res.send({
-//     status: true,
-//     data: user
-// }
-
 const signUpAttempt = (req, res) => {
     // * check if email exist...
     User.findOne({ email: req.body.bodyData.email })
         .then(result => {
-            if (result.lenght >= 1) {
+            if (result) {
                 return res.status(409).send({
                     message: 'user already exist'
                 })

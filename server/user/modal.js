@@ -4,8 +4,8 @@ const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-    userName: {
+const UserSchema = new mongoose.Schema({
+     userName:{
         type: String,
         require: true
     },
@@ -19,17 +19,7 @@ const UserSchema = new Schema({
         type: String,
         require: true,
         minlength: 6
-    },
-    tokens: [{
-        access: {
-            type: String,
-            require: true
-        },
-        token: {
-            type: String,
-            require: true
-        }
-    }]
+    }
 });
 // UserSchema.methods.toJSON = function () {
 //     const user = this;
