@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(" ")[1];
-        console.log(token);
+        console.log("Auth-access-middleware: ",token);
         const decodedData = jwt.verify(token, 'olx-pakistan');
         console.log("Decoded Data",decodedData);
         req.userData = decodedData
