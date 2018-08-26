@@ -21,6 +21,7 @@ const addProductAttempt = (request, response) => {
 const getAllProductAttempt = (request, response) => {
     Product.find().select('title name catagory description price')
         .then(docs => {
+            console.log(docs)
             if (docs.length >= 0) {
                 const desiredResponse = {
                     totalProducts: docs.length,
@@ -45,7 +46,7 @@ const getAllProductAttempt = (request, response) => {
                 response.send({ status: false, message: 'No products to show..Empty database' })
             }
         })
-        .catch(err => respons.send({ status: 500, err }))
+        .catch(err => response.send({ status: 500, err }))
 }
 
 ///////////////// getProductAttempt   /////////////////////////
@@ -133,9 +134,10 @@ const searchProductAttempt = (req, res) => {
 };
 
 const searchViaCatagoryAttempt = (req, res) => {
+    
     const catagoryName = req.body.catagoryName
     Product.find({
-        'name': `${catagoryName}`
+        'catagory': `${catagoryName}`
     })
         .select('name title description price')
         .then(doc => {
@@ -166,7 +168,7 @@ const searchViaCatagoryAttempt = (req, res) => {
             } else {
                 res.send({
                     status: 404,
-                    message: 'No record Found for this name'
+                    message: 'No record Found for this catagory'
                 });
             }
         })

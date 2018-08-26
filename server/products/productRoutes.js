@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 // authCheckAccessMiddleware
 // upload.single('productImage')
-router.post('/addProduct', productController.addProductAttempt);
+router.post('/addProduct', authCheckAccessMiddleware , productController.addProductAttempt);
 router.post('/deleteProduct/:id', authCheckAccessMiddleware, productController.deleteProduct)
 router.get('/allProducts', productController.getAllProductAttempt)
 router.get('/:productId', productController.getProductAttempt)
