@@ -1,4 +1,5 @@
 const APIEndPoint = 'http://localhost:8080';
+
 //************** Add Prodcut***********************
 
 export function addProductAttempt(productDetails) {
@@ -7,7 +8,8 @@ export function addProductAttempt(productDetails) {
             method: "POST",
             body: JSON.stringify( { bodyData : { ...productDetails } } ),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization' : `Bearer ${localStorage.getItem("token")}`
             }
         })
             .then(jsondocs => jsondocs.json())
@@ -52,21 +54,21 @@ export function searchProductViaCatagoryAttempt(catagoryName) {
     return dispatch => {
         fetch(`${APIEndPoint}/dashboard/products/searchProductViaCatagory`, {
             method: 'POST',
-            body: JSON.stringify({ catagoryName }),
+            body:JSON.stringify( {  catagoryName } ),
             headers: {
-                'Content-Type': 'applicatio/json'
+                'Content-Type': 'application/json'
             }
         })
             .then(jsonData => jsonData.json())
             .then(docs => {
-                console.log(docs);
-                dispatch({
-                    type: 'CATAGORY_SEARCH_RESPONSE',
-                    payload: docs
-                })
+                    console.log(docs)
+                    dispatch({
+                        type: 'CATAGORY_SEARCH_RESPONSE',
+                        payload: docs
+                    })
             })
             .catch(error => {
-                console.log('Error: ', error);
+               
             })
     }
 }
