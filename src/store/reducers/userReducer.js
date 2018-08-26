@@ -1,19 +1,19 @@
+import { UserActions } from "./Actions";
 const defaultState = {
-  users : []
+  users : null
 };
-
 const userReducer = ( state = defaultState , action) => {
+  const newState = { ...state};
     switch(action.type) {
-      case 'GET_USER_LOGIN':
-        return {
-          user : action.payload
-        };
+      case UserActions.singInSuccess:
+        newState.users = action.payload 
         break;
-      case 'GET_USER_SIGN_UP':
-        console.log('GET_USER_SIGN_UP HITTED!');
-        return {
-          user : action.payload
-        }
+      case UserActions.signInError: 
+        break;
+      case UserActions.signUpSuccess:
+        newState.users = action.payload  
+        break;
+      case UserActions.signUpError:
         break;
       case 'GET_USER_LOGOUT':
         console.log('GET_USER_LOGOUT HITTED!');
@@ -22,7 +22,7 @@ const userReducer = ( state = defaultState , action) => {
         }
         break;
     }
-    return state;
+    return newState;
 }
 
 export {
