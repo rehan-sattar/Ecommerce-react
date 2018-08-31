@@ -27,9 +27,9 @@ class AddProductForm extends React.Component {
         console.log('state after Submission: ', this.state);
         this.props.addproduct(this.state);
     }
-    setCatagory(valueOfInput) {
+    setCatagory(e) {
         this.setState({
-            catagory: valueOfInput
+            catagory: e.target.value
         })
     }
     render() {
@@ -74,9 +74,20 @@ class AddProductForm extends React.Component {
                                     value={this.state.price}
                                     onChange={(e) => this.setState({ price: e.target.value })}
                                 /> <br />
-
-                                <ProductList catagoryFunc={this.setCatagory} /> <br />
-
+                                <select
+                                    onChange={ this.setCatagory }
+                                    className="form-control" required>
+                                    <option value="select">Select Catagory</option>
+                                    <option value="propertyForSale">Property for Sale</option>
+                                    <option value="propertyForRent">Property For Rent</option>
+                                    <option value="bikes">Bikes</option>
+                                    <option value="cars">Cars</option>
+                                    <option value="electrnoicsAndHomeApp">Electronic & Home Appliances</option>
+                                    <option value="mobiles">Mobiles</option>
+                                    <option value="jobs">jobs</option>
+                                    <option value="services">Services</option>
+                                    <option value="furiture">Furniture</option>
+                                </select>
                                 <textarea
                                     required
                                     placeholder="Description.."

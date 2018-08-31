@@ -71,7 +71,7 @@ class userDashboard extends React.Component {
         </div>
         <div className="container">
           <div className="row">
-            {listOfProducts.map(product => <ProductCard productItem={product} />)}
+            {listOfProducts.map((product, index) => <ProductCard key={index} productItem={product} />)}
           </div>
         </div>
       </div>
