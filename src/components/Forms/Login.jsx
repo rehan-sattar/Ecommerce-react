@@ -1,21 +1,26 @@
 import React from "react";
+import { withRouter } from 'react-router'
 import { connect } from "react-redux";
 import {bindActionCreators} from "redux";
+import createHistory from 'history/createBrowserHistory';
 import { getUserloginAction } from "../../store/Actions/userActions";
 import "./cards.css";
+const history = createHistory();
 class LoginForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
         email : '',
         password: '',
         error : ''
     };
-
     this.handleSubmit = this.handleSubmit.bind(this);
   };
-
-
+  componentWillReceiveProps(props) {
+    if( props.user ) {
+      this.props.history.push("/dashboard");
+    }
+  }
   handleSubmit(e) {
     e.preventDefault();
     console.log(this.state);
@@ -58,21 +63,19 @@ class LoginForm extends React.Component {
   };
 };
 
-// const mapStateToProps = (state) => {
-//   console.log('Props state',state);
-//   return {
-//     user : state.user,
-//     proprCheck : true
-//   };
-// };
-
+function mapStateToProps(state) {
+  console.log(state.userReducer.users)
+  return {
+    user: state.userReducer.users
+  };
+}
 
 const mapDispatchToProps = (dispatch) =>  {
   return bindActionCreators({
-      userLogin: (state) => getUserloginAction(state)
+      userLogin: getUserloginAction
     },
     dispatch
   );
 }
 
-export default connect(undefined, mapDispatchToProps)(LoginForm);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm));
