@@ -18,9 +18,7 @@ const signInAttempt = (req, res) => {
                     const token = jwt.sign({
                         email: user.email,
                         id: user._id
-                    }, 'olx-pakistan', {
-                            expiresIn: '1h'
-                        });
+                    }, 'olx-pakistan');
                     console.log(token);
                     res.status(200).send({
                         message: 'Auth Success!',
