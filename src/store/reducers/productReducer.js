@@ -1,26 +1,25 @@
+import { ProductActions } from "./Actions";
 const defaultState = {
-    products: []
+    allProducts: [],
+    newProduct: null,
+    searchResponseViaCatagory: []
 };
 function productReducer(state = defaultState, action) {
-    switch (state) {
-        case 'All_PRODUCTS_RESPONSE':
-        
-            return {
-                products: action.payload
-            }
+    let newState = { ...state };
+    switch (action.type) {
+        case ProductActions.getAllProductsSuccess:
+            newState.allProducts = action.payload
             break;
-        case 'Add_PRODUCT_ATTEMPT':
-        return {
-            productToBeadded : action.payload
-        }
-        case 'CATAGORY_SEARCH_RESPONSE': 
-        return {
-            products: action.payload
-        }
+        case ProductActions.addProductSuccess:
+            newState.newProduct = action.payload;
+            break;
+        case ProductActions.searchProductByCatagorySuccess:
+            newState.searchResponseViaCatagory = action.payload;
+            break;
+        case ProductActions.searchProductByCatagoryError:
+            console.log('ERROR HERE')
+            break;
     }
-    return state
-} 
-
-
-
+    return newState;
+}
 export { productReducer };

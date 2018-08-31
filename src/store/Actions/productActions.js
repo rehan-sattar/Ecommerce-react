@@ -1,28 +1,29 @@
+import { ProductActions } from "../reducers/Actions";
 const APIEndPoint = 'http://localhost:8080';
-
 //************** Add Prodcut***********************
 
 export function addProductAttempt(productDetails) {
     return dispatch => {
         fetch(`${APIEndPoint}/dashboard/products/addProduct`, {
             method: "POST",
-            body: JSON.stringify( { bodyData : { ...productDetails } } ),
+            body: JSON.stringify({ bodyData: { ...productDetails } }),
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization' : `Bearer ${localStorage.getItem("token")}`
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
             }
         })
             .then(jsondocs => jsondocs.json())
             .then(docs => {
-                console.log(docs);
                 dispatch({
-                    type: 'Add_PRODUCT_ATTEMPT',
+                    type: ProductActions.addProductSuccess,
                     payload: docs
                 })
             })
             .catch(error => {
-                console.log('Error: ', error);
-            })
+                dispatch({
+                    type: ProductActions.addProductError
+                })
+            });
     };
 };
 
@@ -31,6 +32,7 @@ export function addProductAttempt(productDetails) {
 
 export function getAllProductAttempt() {
     return dispatch => {
+        console.log('Test 1')
         fetch(`${APIEndPoint}/dashboard/products/allProducts`, {
             method: "GET",
         })
@@ -38,12 +40,12 @@ export function getAllProductAttempt() {
             .then(docs => {
                 console.log(docs);
                 dispatch({
-                    type: 'All_PRODUCTS_RESPONSE',
+                    type: ProductActions.getAllProductsSuccess,
                     payload: docs
                 })
             })
             .catch(error => {
-                console.log('Error: ', error);
+                type: ProductActions.getAllProductsError
             })
     };
 };
@@ -54,30 +56,37 @@ export function searchProductViaCatagoryAttempt(catagoryName) {
     return dispatch => {
         fetch(`${APIEndPoint}/dashboard/products/searchProductViaCatagory`, {
             method: 'POST',
-            body:JSON.stringify( {  catagoryName } ),
+            body: JSON.stringify({ catagoryName }),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(jsonData => jsonData.json())
             .then(docs => {
-                    console.log(docs)
+                if (docs.message === "No record Found for this catagory") {
                     dispatch({
-                        type: 'CATAGORY_SEARCH_RESPONSE',
+                        type: ProductActions.searchProductByCatagoryError,
+                        err: docs.message
+                    })
+
+                } else {
+                    dispatch({
+                        type: ProductActions.searchProductByCatagorySuccess,
                         payload: docs
                     })
+                }
             })
             .catch(error => {
-               
+                dispatch({
+                    type: ProductActions.searchProductByCatagoryError
+                })
             })
-    }
-}
+    };
+};
 
 
 
 // ****************** Search Via Name ******************* 
-
-
 export function searchProductViaNameAttempt(productName) {
     return dispatch => {
         fetch(`${APIEndPoint}/dashboard/products/searchProduct/${productName}`)
