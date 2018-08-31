@@ -4,7 +4,6 @@ const Product = require('./modal');
 /////////////// addProductAttempt ////////////////////////
 const addProductAttempt = (request, response) => {
     const product = new Product(request.body.bodyData);
-    // console.log(product)
     product
         .save()
         .then(res => {

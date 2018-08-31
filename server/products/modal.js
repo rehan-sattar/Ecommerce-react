@@ -6,8 +6,8 @@ const productScehma = mongoose.Schema({
     year: { type: Number, required: true },
     catagory: { type: String, require: true },
     price: { type: Number, required: true },
-    sellerPhone : { type : String, required: true },
-    sellerLocation : { type: String, required: true}
+    sellerPhone: { type: String, required: true },
+    sellerLocation: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Products', productScehma);
