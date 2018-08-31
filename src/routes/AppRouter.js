@@ -13,6 +13,7 @@ import PublicProducts from "../components/PublicProducts/publicProducts"
 
 const AppRouter = () => (
   <main>
+    
     <HeaderLoggedOut />
 
     {/* <HeaderLoggedIn /> */}
@@ -20,8 +21,8 @@ const AppRouter = () => (
       <Route exact path='/' component={Home} />
       <Route path='/user/signIn' component={LoginForm} />
       <Route path='/user/signUp' component={signUp} />
-      <Route path='/user/publicProducts'component={PublicProducts}/>
-      <Route path="/user/publicProducts/:product"/>
+      <Route path='/user/publicProducts' component={PublicProducts} />
+      <Route path="/user/publicProducts/:product" />
       <Route path='/dashboard' exact component={userDashboard} />
       <Route path="/dashboard/addProduct" component={AddProductForm} />
       <Route path="/dashboard/searchProduct" component={SearchProduct} />
@@ -31,4 +32,4 @@ const AppRouter = () => (
 );
 
 
-export default AppRouter;
+export default (AppRouter);
