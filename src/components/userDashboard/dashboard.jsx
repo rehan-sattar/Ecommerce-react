@@ -2,45 +2,30 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { bindActionCreators } from "redux";
-import { getUserLogout } from "../../store/Actions/userActions";
-import AddProductForm from "../userDashboard/addProduct";
-import SearchProduct from "../userDashboard/searchProduct";
-import HeaderLoggedIn from "../Headers/loggedInHeader";
 import ProductCard from "../PublicProducts/ProductCard";
 import { getAllProductAttempt } from "../../store/Actions/productActions";
 import "./dashboard.css";
 class userDashboard extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      products: []
+    };
+  };
+
   componentDidMount() {
     this.props.downloadAllProducts();
   }
+
+  componentWillReceiveProps(props) {
+    // console.log("from Component Props: ", props.allProducts.allProducts.products);
+    this.setState({
+      products: props.allProducts.allProducts.products
+    });
+    // console.log("From State: ", props.allProducts.allProducts.products);
+  };
   render() {
-    const listOfProducts = [
-      {
-        id: 1,
-        name: 'P1'
-      },
-      {
-        id: 2,
-        name: 'P2'
-      },
-      {
-        id: 3,
-        name: 'P3'
-      },
-      {
-        id: 5,
-        name: 'P5'
-      },
-      {
-        id: 6,
-        name: 'P6'
-      },
-      {
-        id: 7,
-        name: 'P7'
-      },
-    ]
     return (
       <div className="dashboard-container pt-5">
         {/* <HeaderLoggedIn /> */}
@@ -71,7 +56,13 @@ class userDashboard extends React.Component {
         </div>
         <div className="container">
           <div className="row">
-            {listOfProducts.map((product, index) => <ProductCard key={index} productItem={product} />)}
+            { 
+              this.state.products.map((product, index) => (
+              <div className="col-md-4 col-lg-4 col-sm-12" key={product._id}>
+                <ProductCard productItem={product} />
+              </div>)
+              )
+            }
           </div>
         </div>
       </div>
@@ -79,10 +70,15 @@ class userDashboard extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    allProducts: state.productReducer.allProducts
+  }
+};
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    downloadAllProducts : () => getAllProductAttempt()
+    downloadAllProducts: () => getAllProductAttempt()
   }, dispatch)
 }
 
-export default connect(undefined, mapDispatchToProps)(userDashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(userDashboard);

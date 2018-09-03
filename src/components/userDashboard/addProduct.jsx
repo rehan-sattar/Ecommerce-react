@@ -3,6 +3,8 @@ import ProductList from "./productList";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { addProductAttempt } from "../../store/Actions/productActions";
+import { SweetAlert } from "react-bootstrap-sweetalert";
+const swal = require('bootstrap-sweetalert');
 class AddProductForm extends React.Component {
     constructor() {
         super();
@@ -10,12 +12,13 @@ class AddProductForm extends React.Component {
             title: '',
             name: '',
             description: '',
-            year : '',
+            year: '',
             price: '',
             images: [],
             catagory: '',
             sellerLocation: '',
-            sellerPhone: ''
+            sellerPhone: '',
+            showSweetAlert: false
 
         };
 
@@ -24,7 +27,6 @@ class AddProductForm extends React.Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        console.log('state after Submission: ', this.state);
         this.props.addproduct(this.state);
     }
     setCatagory(e) {
@@ -75,7 +77,7 @@ class AddProductForm extends React.Component {
                                     onChange={(e) => this.setState({ price: e.target.value })}
                                 /> <br />
                                 <select
-                                    onChange={ this.setCatagory }
+                                    onChange={this.setCatagory}
                                     className="form-control" required>
                                     <option value="select">Select Catagory</option>
                                     <option value="propertyForSale">Property for Sale</option>
@@ -97,9 +99,6 @@ class AddProductForm extends React.Component {
                                 > Description </textarea> <br />
                                 <h5>upload images</h5>
                                 <input type="file" name="productImage" className="form-control" />
-                                {/* <input type="file" className="form-control" />
-                                <input type="file" className="form-control" />
-                                <input type="file" className="form-control" /> */}
                                 <br />
                                 <input
                                     required
@@ -124,6 +123,7 @@ class AddProductForm extends React.Component {
                         </div>
                     </div>
                 </div>
+
             </div>
         )
     }

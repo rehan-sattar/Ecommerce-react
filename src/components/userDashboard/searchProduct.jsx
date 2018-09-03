@@ -20,17 +20,25 @@ class SearchProduct extends React.Component {
 
     componentWillReceiveProps(props) {
         const objectFlag = props.allProductsOfDesiredCatagory.productReducer.searchResponseViaCatagory.products
-        if (typeof objectFlag) {
-            console.log('Fuck me ', objectFlag)
+        if (objectFlag.status=== 404 ) {
+            console.log('inside ComponentWillRecieveProps');
+            this.setState({
+                error: 'No record Found!',
+                searchProducts: []
+            })
+        } else {
+            this.setState({
+                searchProducts: objectFlag,
+                error: ""
+            });
+            // console.log('Response Of Search: ', objectFlag)
             // if (objectFlag.message === "No record Found for this catagory") {
             //     this.setState({
             //         error: 'No record Found for this catagory'
-            // //     })
-            // }
+            //     })
         }
-        this.setState({
-            searchProducts: objectFlag
-        });
+        // }
+        // 
     }
     render() {
         return (
@@ -40,19 +48,20 @@ class SearchProduct extends React.Component {
                         <h1>Search Product</h1>
                         <div className="col-md-5 col-lg-5 col-sm-12">
                             <ProductList setCatagory={this.setCatagory} />
-                            <div className="row">
-                                {
-                                    this.state.error === "" ? <p>{this.state.error}</p> :
-                                        this.state.searchProducts.map((item) => {
-                                            return (
-                                                <div className="col-md-4 col-lg-4 col-sm-12" key={item._id}>
-                                                    <ProductCard productItem={item} />
-                                                </div>
-                                            )
-                                        })
-                                }
-                            </div>
                         </div>
+                    </div>
+
+                    <div className="row">
+                        {
+                            this.state.error === "No record Found!" ? <p>{this.state.error}</p> :
+                                this.state.searchProducts.map((item) => {
+                                    return (
+                                        <div className="col-md-4 col-lg-4 col-sm-12" key={item._id}>
+                                            <ProductCard productItem={item} />
+                                        </div>
+                                    )
+                                })
+                        }
                     </div>
                 </div>
             </div>
