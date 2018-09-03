@@ -64,9 +64,11 @@ export function searchProductViaCatagoryAttempt(catagoryName) {
             .then(jsonData => jsonData.json())
             .then(docs => {
                 if (docs.message === "No record Found for this catagory") {
+                    console.log('Perfect', docs);
+
                     dispatch({
                         type: ProductActions.searchProductByCatagoryError,
-                        err: docs.message
+                        payload: docs
                     })
 
                 } else {
@@ -78,7 +80,7 @@ export function searchProductViaCatagoryAttempt(catagoryName) {
             })
             .catch(error => {
                 dispatch({
-                    type: ProductActions.searchProductByCatagoryError
+                    type: ProductActions.searchProductByCatagoryError,
                 })
             })
     };
