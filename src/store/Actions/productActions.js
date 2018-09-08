@@ -63,20 +63,19 @@ export function searchProductViaCatagoryAttempt(catagoryName) {
         })
             .then(jsonData => jsonData.json())
             .then(docs => {
-                if (docs.message === "No record Found for this catagory") {
-                    console.log('Perfect', docs);
+                // if (docs.message === "No record Found for this catagory") {
+                //     console.log('Perfect', docs);
+                //     dispatch({
+                //         type: ProductActions.searchProductByCatagoryError,
+                //         payload: docs
+                //     })
 
-                    dispatch({
-                        type: ProductActions.searchProductByCatagoryError,
-                        payload: docs
-                    })
-
-                } else {
+                // } else {
                     dispatch({
                         type: ProductActions.searchProductByCatagorySuccess,
                         payload: docs
                     })
-                }
+                // }
             })
             .catch(error => {
                 dispatch({

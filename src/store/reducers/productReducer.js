@@ -2,22 +2,29 @@ import { ProductActions } from "./Actions";
 const defaultState = {
     allProducts: [],
     newProduct: null,
-    searchResponseViaCatagory: []
+    searchResponseViaCatagory: [],
 };
 function productReducer(state = defaultState, action) {
     let newState = { ...state };
     switch (action.type) {
+        // get all products
         case ProductActions.getAllProductsSuccess:
             newState.allProducts = action.payload
             break;
+        case ProductActions.getAllProductsError:
+            break;
+        // add products
         case ProductActions.addProductSuccess:
             newState.newProduct = action.payload;
             break;
+        case ProductActions.addProductError:
+
+        // search products
         case ProductActions.searchProductByCatagorySuccess:
+            // console.log("Payload: ", action.payload);
             newState.searchResponseViaCatagory = action.payload;
             break;
         case ProductActions.searchProductByCatagoryError:
-            console.log('ERROR HERE')
             break;
     }
     return newState;
