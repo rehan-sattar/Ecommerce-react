@@ -19,8 +19,9 @@ class SearchProduct extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        const objectFlag = props.allProductsOfDesiredCatagory.productReducer.searchResponseViaCatagory.products
-        if (objectFlag.status=== 404 ) {
+        const objectFlag = props.allProductsOfDesiredCatagory.productReducer.searchResponseViaCatagory;
+        console.log("This is object file: ", objectFlag);
+        if (objectFlag.status === 404) {
             console.log('inside ComponentWillRecieveProps');
             this.setState({
                 error: 'No record Found!',
@@ -28,17 +29,17 @@ class SearchProduct extends React.Component {
             })
         } else {
             this.setState({
-                searchProducts: objectFlag,
+                searchProducts: objectFlag.products,
                 error: ""
             });
-            // console.log('Response Of Search: ', objectFlag)
-            // if (objectFlag.message === "No record Found for this catagory") {
-            //     this.setState({
-            //         error: 'No record Found for this catagory'
-            //     })
+            console.log('Response Of Search: ', objectFlag)
+            if (objectFlag.message === "No record Found for this catagory") {
+                this.setState({
+                    error: 'No record Found for this catagory'
+                })
+            }
         }
-        // }
-        // 
+
     }
     render() {
         return (
