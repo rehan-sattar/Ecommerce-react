@@ -1,6 +1,7 @@
 const User = require('./modal');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Product = require('../products/modal');
 
 const signInAttempt = (req, res) => {
     User.findOne({
@@ -96,9 +97,52 @@ const getAllUsers = (req, res) => {
         })
 
 }
+const addToFavoriteAttempt = (req, res) => {
+    const { productId, userId } = req.body.bodyData;
+    // productId = req.params.product_id;
+    // console.log(productId);
+
+    // find the user from user ID
+    // get the product from productd
+    // update the user favorite by getting the product
+    // save user 
+
+
+
+
+    Product.findOne({
+        _id: productId
+    }).then((product) => {
+        User.findOneAndUpdate({ '_id': userId }, { $push: { favoritProducts: product } })
+            .then((response) => {
+                res.send({response});
+            });
+    })
+        // .then(userObject => {
+        //     console.log(userObject);
+        //     return User.update(
+        //         { _id: userObject._id },
+        //         { $push: { favoritProducts: product } },
+        //     );
+        // }).then(updatedDoc => {
+        //     console.log(updatedDoc);
+        //     res.send({
+        //         status: true,
+        //         FavoritDocument: updatedDoc
+        //     })
+        .catch(err => {
+            console.log(err);
+            res.send({
+                status: false,
+                err
+            })
+        })
+
+}
 module.exports = {
     signInAttempt,
     signUpAttempt,
     deleteUserAttempt,
-    getAllUsers
+    getAllUsers,
+    addToFavoriteAttempt
 };

@@ -5,10 +5,8 @@ const controller = require('./userControllers');
 
 router.post('/signUp', controller.signUpAttempt);
 router.post('/signIn', controller.signInAttempt);
+router.post('/addToFavorite', controller.addToFavoriteAttempt);
 router.post('/delete/:id', controller.deleteUserAttempt);
 router.get('/getAllUsers', controller.getAllUsers);
 
 module.exports = router;
-
-
-link : 'loca'

@@ -4,6 +4,7 @@ const userRoutes = require('./user/userRoutes');
 const productRoutes = require('./products/productRoutes');
 const bodyParser = require('body-parser');
 const CORS = require('cors');
+const fileUplaod = require('express-fileupload');
 
 const port = process.env.PORT || 8080;
 
@@ -11,6 +12,7 @@ require('./dbConnection');
 express.use(CORS());
 express.use(bodyParser.json());
 express.use(bodyParser.urlencoded({ extended: true }));
+express.use(fileUplaod());
 express.use('/user', userRoutes );
 express.use('/dashboard/products' ,  productRoutes);
 // express.use('/allproducts', allProducts);
