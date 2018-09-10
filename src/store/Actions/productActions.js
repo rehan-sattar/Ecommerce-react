@@ -4,6 +4,7 @@ const APIEndPoint = 'http://localhost:8080';
 
 export function addProductAttempt(productDetails) {
     return dispatch => {
+        console.log("Product Details",productDetails);
         fetch(`${APIEndPoint}/dashboard/products/addProduct`, {
             method: "POST",
             body: JSON.stringify({ bodyData: { ...productDetails } }),
@@ -32,13 +33,11 @@ export function addProductAttempt(productDetails) {
 
 export function getAllProductAttempt() {
     return dispatch => {
-        console.log('Test 1')
         fetch(`${APIEndPoint}/dashboard/products/allProducts`, {
             method: "GET",
         })
             .then(jsondocs => jsondocs.json())
             .then(docs => {
-                console.log(docs);
                 dispatch({
                     type: ProductActions.getAllProductsSuccess,
                     payload: docs
