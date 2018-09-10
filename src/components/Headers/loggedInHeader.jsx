@@ -26,7 +26,7 @@ class HeaderLoggedIn extends React.Component {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
+                {/* <li class="nav-item active">
                   <Link to="" className="header_links"> <i className="fa fa-plus mx-1"></i> Add Product</Link>
                 </li>
                 <li class="nav-item">
@@ -34,7 +34,7 @@ class HeaderLoggedIn extends React.Component {
                 </li>
                 <li class="nav-item">
                   <Link to="" className="header_links">  <i className="fa fa-user mx-1"></i>Profile</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link to="" className="header_links">  <i className="fa fa-logout"></i> Logout</Link>
                 </li>
