@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from 'react-router'
 import { connect } from "react-redux";
-import {bindActionCreators} from "redux";
+import { bindActionCreators } from "redux";
 import createHistory from 'history/createBrowserHistory';
 import { getUserloginAction } from "../../store/Actions/userActions";
 import "./cards.css";
@@ -10,14 +10,14 @@ class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        email : '',
-        password: '',
-        error : ''
+      email: '',
+      password: '',
+      error: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   };
   componentWillReceiveProps(props) {
-    if( props.user ) {
+    if (props.user) {
       this.props.history.push("/dashboard");
     }
   }
@@ -26,28 +26,38 @@ class LoginForm extends React.Component {
     console.log(this.state);
     this.props.userLogin(this.state);
     this.setState({
-      email : '',
+      email: '',
       password: '',
-      error : ''
+      error: ''
     })
   };
 
   render() {
-    return(
+    return (
       <div>
-      <div className="container mt-4">
-        <div className="row justify-content-center">
+        <div className="container mt-4">
+          <div className="row">          <div className="col-md-5 col-lg-6 col-sm-12">
+            <h1 className="display-3 text-warning">Olx Pakistan</h1>
+            <small className="display-3 text-muted text-center">A progressive Approach</small>
+            <ol className="mt-4 lead text-primary">
+              <li>Signup/Signin</li>
+              <li>Submit an Add</li>
+              <li>Search Adds via Catagory</li>
+              <li>Add details like: Name, Description, modal etc</li>
+              <li>Add to favorit Products</li>
+            </ol>
+          </div>
             <div className="col-md-5 col-lg-5 col-sm-12">
               <div className="card shadow">
                 <div className="card-header text-center">
-                    <h2> <i className="fas fa-sign-in-alt"></i> login</h2>
+                  <h2> <i className="fas fa-sign-in-alt"></i> login</h2>
                 </div>
                 <form onSubmit={this.handleSubmit}>
                   <div className="card-body">
-                        <input className="form-control" type="email" required placeholder="Email"
-                            onChange= {(e) => this.setState({email: e.target.value }) }  /> <br />
-                        <input className="form-control" type="password" required placeholder="password"
-                            onChange={(e) => this.setState({password: e.target.value}) }/> <br />
+                    <input className="form-control" type="email" required placeholder="Email"
+                      onChange={(e) => this.setState({ email: e.target.value })} /> <br />
+                    <input className="form-control" type="password" required placeholder="password"
+                      onChange={(e) => this.setState({ password: e.target.value })} /> <br />
                   </div>
                   <div className="card-footer">
                     <button className="btn btn-dark btn-block" type="submit">Login <i className="fas fa-arrow-right float-right"></i></button>
@@ -70,10 +80,10 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) =>  {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-      userLogin: getUserloginAction
-    },
+    userLogin: getUserloginAction
+  },
     dispatch
   );
 }

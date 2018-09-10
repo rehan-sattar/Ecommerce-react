@@ -16,8 +16,9 @@ class signUp extends React.Component {
   };
 
   componentWillReceiveProps(props) {
-    if (props.userReducer.user ) {
-      this.props.history.push("/dashboard");
+    console.log(props);
+    if (props.user.isAuthenticated ) {
+      props.history.push("/dashboard");
     }
   }
   handleSubmit(e) {
@@ -67,7 +68,7 @@ class signUp extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user : state.user
+    user : state.userReducer
   };
 };
 const mapDispatchToProps = (dispatch) => {
