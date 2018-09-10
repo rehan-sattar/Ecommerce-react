@@ -1,5 +1,5 @@
+import { UserActions } from "../reducers/Actions";
 const APIEndPoint = 'http://localhost:8080'
-
 export function getUserloginAction({ email, password }) {
   return dispatch => {
     fetch(`${APIEndPoint}/user/signIn`, {
@@ -11,13 +11,14 @@ export function getUserloginAction({ email, password }) {
     })
       .then(res => res.json())
       .then(data => {
+        localStorage.setItem('userId', data._id);
         dispatch({
-          type: 'SIGN_IN_SUCCESS',
+          type: UserActions.singInSuccess,
           payload: data
         })
       })
       .catch(err => dispatch({
-        type: 'SIGN_IN_ERROR'
+        type: UserActions.signInError
       }))
   };
 };
@@ -25,7 +26,6 @@ export function getUserloginAction({ email, password }) {
 
 export function createUser({ userName, email, password }) {
   return dispatch => {
-    console.log('inside create Dispatch user');
     fetch(`${APIEndPoint}/user/signUp`, {
       method: 'post',
       body: JSON.stringify({ bodyData: { userName, email, password } }),
@@ -35,21 +35,68 @@ export function createUser({ userName, email, password }) {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(`USER DATA: ${data}`)
+        console.log('inside user signup ')
         dispatch({
-          type: 'SIGN_UP_SUCCESS',
-          payload : data
+          type: UserActions.signUpSuccess,
+          payload: data
         })
       })
       .catch(e => dispatch({
-        type : 'SIGN_UP_ERROR'
+        type: UserActions.signUpError
       }));
+  }
+}
+
+
+export function AddToFavoritAttempt(productId) {
+  return dispatch => {
+    let userId = localStorage.getItem('userId');
+    fetch(`${APIEndPoint}/user/addToFavorite`, {
+      method: 'POST',
+      body: JSON.stringify({ bodyData: { productId, userId } }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(favoritProductsObject => {
+        if (favoritProductsObject.status === true) {
+          dispatch({
+            type: UserActions.addToFavoritSuccess,
+            payload: favoritProductsObject.favoritProducts
+          })
+        }
+      })
+  }
+}
+
+export function getAllFavoritProductAttempt() {
+  console.log('yaha tak agya hun')
+  return dispatch => {
+    let id = localStorage.getItem('userId');
+    fetch(`${APIEndPoint}/user/getAllFavoritProducts`, {
+      method: 'POST',
+      body: JSON.stringify({ bodyData: { id } }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(favoritProductsObject => {
+        if (favoritProductsObject.status === true) {
+          dispatch({
+            type: UserActions.getAllFavProductsSuccess,
+            payload: favoritProductsObject.favoritProducts
+          })
+        } 
+      })
   }
 }
 
 export function getUserLogout() {
   return dispatch => {
-    
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
     console.log('Work to be done Logout!')
   };
 };
