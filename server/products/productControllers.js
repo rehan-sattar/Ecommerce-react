@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+
 const Product = require('./modal');
 
 /////////////// addProductAttempt ////////////////////////
@@ -7,6 +7,7 @@ const addProductAttempt = (request, response) => {
     product
         .save()
         .then(res => {
+            console.log("Response from Product", res);
             response.send({
                 status: true,
                 pdoductData: res,
@@ -18,9 +19,8 @@ const addProductAttempt = (request, response) => {
 
 ///////////getAllProductAttempt//////////////////
 const getAllProductAttempt = (request, response) => {
-    Product.find().select('title name catagory description price')
+    Product.find().select('title name catagory description price imagebaseLink')
         .then(docs => {
-            console.log(docs)
             if (docs.length >= 0) {
                 const desiredResponse = {
                     totalProducts: docs.length,
@@ -33,6 +33,7 @@ const getAllProductAttempt = (request, response) => {
                         price: doc.price,
                         sellerLocation: doc.sellerLocation,
                         sellerPhone: doc.sellerPhone,
+                        imagebaseLink : doc.imagebaseLink,
                         request: {
                             type: 'GET',
                             url: `localhost:8080/dashboard/products/${doc._id}`
@@ -133,12 +134,12 @@ const searchProductAttempt = (req, res) => {
 };
 
 const searchViaCatagoryAttempt = (req, res) => {
-    
+
     const catagoryName = req.body.catagoryName
     Product.find({
         'catagory': `${catagoryName}`
     })
-        .select('name title description price')
+        .select('name title description price imagebaseLink')
         .then(doc => {
             if (doc.length > 0) {
                 productArray = [];
@@ -152,6 +153,7 @@ const searchViaCatagoryAttempt = (req, res) => {
                         price: document.price,
                         sellerPhone: document.sellerPhone,
                         sellerLocation: document.sellerLocation,
+                        imagebaseLink : document.imagebaseLink,
                         request: {
                             type: 'GET',
                             url: `localhost:8080/dashboard/products/searchProduct/` + catagoryName
