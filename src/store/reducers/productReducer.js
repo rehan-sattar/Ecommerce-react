@@ -1,3 +1,4 @@
+import swal from "sweetalert";
 import { ProductActions } from "./Actions";
 const defaultState = {
     allProducts: [],
@@ -15,6 +16,7 @@ function productReducer(state = defaultState, action) {
             break;
         // add products
         case ProductActions.addProductSuccess:
+            swal("Thank you!", "Your add has been submitted!", "success");
             newState.newProduct = action.payload;
             break;
         case ProductActions.addProductError:
