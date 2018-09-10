@@ -20,10 +20,10 @@ const signInAttempt = (req, res) => {
                         email: user.email,
                         id: user._id
                     }, 'olx-pakistan');
-                    console.log(token);
                     res.status(200).send({
                         message: 'Auth Success!',
-                        token
+                        token,
+                        _id: user._id
                     });
                 };
             });
@@ -97,39 +97,20 @@ const getAllUsers = (req, res) => {
         })
 
 }
+
 const addToFavoriteAttempt = (req, res) => {
+    console.log(req.body.bodyData);
     const { productId, userId } = req.body.bodyData;
-    // productId = req.params.product_id;
-    // console.log(productId);
-
-    // find the user from user ID
-    // get the product from productd
-    // update the user favorite by getting the product
-    // save user 
-
-
-
 
     Product.findOne({
-        _id: productId
-    }).then((product) => {
-        User.findOneAndUpdate({ '_id': userId }, { $push: { favoritProducts: product } })
-            .then((response) => {
-                res.send({response});
-            });
+        '_id': productId
     })
-        // .then(userObject => {
-        //     console.log(userObject);
-        //     return User.update(
-        //         { _id: userObject._id },
-        //         { $push: { favoritProducts: product } },
-        //     );
-        // }).then(updatedDoc => {
-        //     console.log(updatedDoc);
-        //     res.send({
-        //         status: true,
-        //         FavoritDocument: updatedDoc
-        //     })
+        .then((product) => {
+            User.findOneAndUpdate({ '_id': userId }, { $push: { favoritProducts: product } })
+                .then((response) => {
+                    res.send({ status: true, favoritProducts: response.favoritProducts });
+                });
+        })
         .catch(err => {
             console.log(err);
             res.send({
@@ -137,12 +118,28 @@ const addToFavoriteAttempt = (req, res) => {
                 err
             })
         })
-
 }
+
+const getAllFavoritProducts = (req, res) => {
+    const { id } = req.body.bodyData;
+    User.findOne({
+        '_id': id
+    }).then(user => {
+        if (user.favoritProducts.lenght !== 0) {
+            res.send({ status: true, favoritProducts: user.favoritProducts })
+        } else {
+            res.send({ status: true, message: "No favorite Products" })
+        }
+
+    }).catch(err => {
+        res.send({ status: false, err })
+    })
+};
 module.exports = {
     signInAttempt,
     signUpAttempt,
     deleteUserAttempt,
     getAllUsers,
-    addToFavoriteAttempt
+    addToFavoriteAttempt,
+    getAllFavoritProducts
 };
