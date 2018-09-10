@@ -10,8 +10,8 @@ const port = process.env.PORT || 8080;
 
 require('./dbConnection');
 express.use(CORS());
-express.use(bodyParser.json());
-express.use(bodyParser.urlencoded({ extended: true }));
+express.use(bodyParser.json({limit: '50mb'}));
+express.use(bodyParser.urlencoded({ extended: true, limit : '50mb' }));
 express.use(fileUplaod());
 express.use('/user', userRoutes );
 express.use('/dashboard/products' ,  productRoutes);
