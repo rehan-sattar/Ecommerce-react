@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import ProductList from "./productList";
 import ProductCard from "../PublicProducts/ProductCard";
+import { AddToFavoritAttempt } from "../../store/Actions/userActions";
 import { searchProductViaCatagoryAttempt } from "../../store/Actions/productActions";
 class SearchProduct extends React.Component {
     constructor() {
@@ -13,16 +14,20 @@ class SearchProduct extends React.Component {
             error: ''
         }
         this.setCatagory = this.setCatagory.bind(this);
+        this.addTofavoritHandler = this.addTofavoritHandler.bind(this);
     }
+    addTofavoritHandler(product_Id) {
+        this.props.requestToAddFavPro(product_Id)
+        // console.log('inside addTofavoritHandler' , product_Id);
+    
+      }
     setCatagory(valueOfInput) {
         this.props.downloadTheseProducts(valueOfInput);
     }
 
     componentWillReceiveProps(props) {
         const objectFlag = props.allProductsOfDesiredCatagory.productReducer.searchResponseViaCatagory;
-        console.log("This is object file: ", objectFlag);
         if (objectFlag.status === 404) {
-            console.log('inside ComponentWillRecieveProps');
             this.setState({
                 error: 'No record Found!',
                 searchProducts: []
@@ -32,10 +37,10 @@ class SearchProduct extends React.Component {
                 searchProducts: objectFlag.products,
                 error: ""
             });
-            console.log('Response Of Search: ', objectFlag)
+
             if (objectFlag.message === "No record Found for this catagory") {
                 this.setState({
-                    error: 'No record Found for this catagory'
+                    error: 'No record found for this catagory..'
                 })
             }
         }
@@ -45,20 +50,22 @@ class SearchProduct extends React.Component {
         return (
             <div>
                 <div className="container mt-5">
+                    <h1 className="text-center"> <i className="fa fa-search"></i> Search Product</h1>
+
                     <div className="row justify-content-center">
-                        <h1>Search Product</h1>
                         <div className="col-md-5 col-lg-5 col-sm-12">
                             <ProductList setCatagory={this.setCatagory} />
                         </div>
                     </div>
+                        <hr/>
 
                     <div className="row">
                         {
-                            this.state.error === "No record Found!" ? <p>{this.state.error}</p> :
+                            this.state.error === "No record Found!" ? <p className="lead text-warning my-3">{this.state.error}</p> :
                                 this.state.searchProducts.map((item) => {
                                     return (
                                         <div className="col-md-4 col-lg-4 col-sm-12" key={item._id}>
-                                            <ProductCard productItem={item} />
+                                            <ProductCard favFunct={true} addTofavoritHandle={this.addTofavoritHandler} productItem={item}  />
                                         </div>
                                     )
                                 })
@@ -73,7 +80,8 @@ class SearchProduct extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        downloadTheseProducts: (catagory) => searchProductViaCatagoryAttempt(catagory)
+        downloadTheseProducts: (catagory) => searchProductViaCatagoryAttempt(catagory),
+        requestToAddFavPro : (produtId) => AddToFavoritAttempt(produtId)
     }, dispatch)
 }
 const mapStateToProps = (state) => {

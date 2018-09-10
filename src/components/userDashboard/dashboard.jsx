@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import ProductCard from "../PublicProducts/ProductCard";
 import { getAllProductAttempt } from "../../store/Actions/productActions";
+import { AddToFavoritAttempt } from "../../store/Actions/userActions";
 import "./dashboard.css";
 class userDashboard extends React.Component {
 
@@ -12,23 +13,25 @@ class userDashboard extends React.Component {
     this.state = {
       products: []
     };
+    this.addTofavoritHandler = this.addTofavoritHandler.bind(this);
   };
+  addTofavoritHandler(product_Id) {
+    this.props.requestToAddFavPro(product_Id)
+    // console.log('inside addTofavoritHandler' , product_Id);
 
+  }
   componentDidMount() {
     this.props.downloadAllProducts();
   }
 
   componentWillReceiveProps(props) {
-    // console.log("from Component Props: ", props.allProducts.allProducts.products);
     this.setState({
       products: props.allProducts.allProducts.products
     });
-    // console.log("From State: ", props.allProducts.allProducts.products);
   };
   render() {
     return (
       <div className="dashboard-container pt-5">
-        {/* <HeaderLoggedIn /> */}
         <div className="container">
           <div className="row">
             <div className="col-md-4 col-lg-4 col-sm-4 mb-2">
@@ -46,7 +49,7 @@ class userDashboard extends React.Component {
               </Link>
             </div>
             <div className="col-md-4 col-lg-4 col-sm-4 mb-2">
-              <Link to="/dashboard/favProduct" className="card_option">
+              <Link to="/dashboard/favoritProducts" className="card_option">
                 <div className="card-body p-3 text-center bg-warning text-white">
                   <h2> <i className="fa fa-star"></i> Favorits </h2>
                 </div>
@@ -59,7 +62,7 @@ class userDashboard extends React.Component {
             { 
               this.state.products.map((product, index) => (
               <div className="col-md-4 col-lg-4 col-sm-12" key={product._id}>
-                <ProductCard productItem={product} />
+                <ProductCard favFunct={true} addTofavoritHandle={this.addTofavoritHandler} productItem={product} />
               </div>)
               )
             }
@@ -77,7 +80,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    downloadAllProducts: () => getAllProductAttempt()
+    downloadAllProducts: () => getAllProductAttempt() , 
+    requestToAddFavPro : (produtId) => AddToFavoritAttempt(produtId)
   }, dispatch)
 }
 
